@@ -1,0 +1,41 @@
+EXPERIMENT:
+  NAME: "InfoTS_linear_eval"
+  TAG: "baselines"
+  PROJECT: "baseline project"
+  DEBUG: False
+  REPETITION_NUM: 5 # Number of repetition times
+  TASK: "train"
+  RESUME: False # Resume training
+  CHECKPOINT: "" # 'Log_2020-03-19_19-53-27'
+  CHKP_IDX: None # Choose index of checkpoint to start from. If None, uses the latest chkp
+  KNN: True
+DATASET:
+  ROOT: "/home/song/datasets/EEG"
+  TYPE: "sleepedf20v2"
+  CHANNELS: 1
+  POINTS: 3000
+  NUM_CLASSES: 5
+  TEST:
+    BATCH_SIZE: 128
+MODEL:
+  TYPE: "SimCLR"
+  ARGS:
+    BACKBONE: "eegconvnet"
+    TEMPERATURE: 0.5
+    SIAMESE: True
+    PROJECTION_DIM: 256
+    PROJECTION_HIDDEN_SIZE: 2048
+    N_FEATURES: 256
+    CLASSIFIER: "LinearClassifier"
+    PRETRAINED_PATH: "/home/song/code/current/meg_classification/ssl/results/debug project/simclr_with_NTXent_2024-06-28_10-18-27/checkpoints/epoch_9_0_chkp.tar"
+    # SOURCE_CHANNELS: 36
+  CRITERION:
+    TYPE: "CE"
+SOLVER:
+  BATCH_SIZE: 512
+  EPOCHS: 200
+  LR: 0.5
+  SCHEDULER:
+    TYPE: "ExponentialLR"
+    GAMMA: 0.99
+    MIN_LR: 0.001
